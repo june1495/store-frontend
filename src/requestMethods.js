@@ -1,6 +1,9 @@
 import axios from 'axios';
+import config from './config/index';
 
-const BASE_URL = 'http://localhost:5000/api/';
+const { URL_BASE } = config;
+
+const BASE_URL = URL_BASE;
 // const TOKEN =
 //   JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser
 //     .accessToken || "";

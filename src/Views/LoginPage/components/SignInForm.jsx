@@ -8,9 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { login } from '../../../redux/apiCalls';
 
-import LoaderComponent from '../../../common/LoaderComponent';
-import MessageComponent from '../../../common/MessageComponent';
-
 import useSignin from '../hook/useSignin';
 
 const SignInForm = () => {
@@ -22,63 +19,42 @@ const SignInForm = () => {
   const { user, isFetching, error } = useSelector((state) => state.user);
 
   return (
-    <>
-      <Formik
-        initialValues={{
-          email: '',
-          password: '',
-        }}
-        validationSchema={validationSchema}
-        onSubmit={(values, { resetForm }) => {
-          login(dispatch, values);
+    <Formik
+      initialValues={{
+        email: '',
+        password: '',
+      }}
+      validationSchema={validationSchema}
+      onSubmit={(values, { resetForm }) => {
+        login(dispatch, values);
 
-          resetForm({ values: '' });
-        }}
-      >
-        {({ errors, touched }) => (
-          <Form>
-            <div className="inputBx">
-              <span>Correo Electrónico</span>
-              <Field name="email" type="email" data-cy="login-email-input" />
-              {errors.email && touched.email ? (
-                <span>{errors.email}</span>
-              ) : null}
-            </div>
-            <div className="inputBx">
-              <span>Contraseña</span>
-              <Field
-                name="password"
-                type="password"
-                data-cy="login-password-input"
-              />
-              {errors.password && touched.password ? (
-                <span>{errors.password}</span>
-              ) : null}
-            </div>
-            <Button type="submit" data-cy="login-submmit-button">
-              Iniciar Sesión
-            </Button>
-          </Form>
-        )}
-      </Formik>
-      <LoaderComponent loading={isFetching} />
-      {user && (
-        <MessageComponent
-          variant="success"
-          message="Inicio Sesión exitosamente!"
-        />
+        resetForm({ values: '' });
+      }}
+    >
+      {({ errors, touched }) => (
+        <Form>
+          <div className="inputBx">
+            <span>Correo Electrónico</span>
+            <Field name="email" type="email" data-cy="login-email-input" />
+            {errors.email && touched.email ? <span>{errors.email}</span> : null}
+          </div>
+          <div className="inputBx">
+            <span>Contraseña</span>
+            <Field
+              name="password"
+              type="password"
+              data-cy="login-password-input"
+            />
+            {errors.password && touched.password ? (
+              <span>{errors.password}</span>
+            ) : null}
+          </div>
+          <Button type="submit" data-cy="login-submmit-button">
+            Iniciar Sesión
+          </Button>
+        </Form>
       )}
-      {error && (
-        <MessageComponent
-          variant="danger"
-          message={
-            JSON.stringify(error) === 'true'
-              ? 'Ocurrio un problema, intente de nuevo mas tarde'
-              : error
-          }
-        />
-      )}
-    </>
+    </Formik>
   );
 };
 export default SignInForm;

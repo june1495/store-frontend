@@ -6,7 +6,7 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-confusing-arrow */
-import { Add, Remove } from '@mui/icons-material';
+
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
@@ -52,7 +52,7 @@ const Cart = () => {
             <TopButton>Continuar Comprando</TopButton>
           </Link>
           <TopTexts>
-            <Toptext>Shopping Cart({cart.quantity})</Toptext>
+            <Toptext>Shopping Cart</Toptext>
           </TopTexts>
           <TopButton type="filled">Checkout Now</TopButton>
         </Top>
@@ -77,9 +77,7 @@ const Cart = () => {
                 </ProductDetail>
                 <PriceDetail>
                   <ProductAmountContainer>
-                    <Remove />
-                    <ProductAmount>{product.quantity}</ProductAmount>
-                    <Add />
+                    <ProductAmount>Cantidad : {product.quantity}</ProductAmount>
                   </ProductAmountContainer>
                   <ProductPrice>
                     $ {product.price * product.quantity}

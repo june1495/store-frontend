@@ -18,6 +18,7 @@ import LoginPage from './Views/LoginPage';
 import RegisterPage from './Views/RegisterPage';
 import AllProducts from './Views/AllProducts';
 import Success from './Views/Success';
+import UserProfile from './Views/UserProfile';
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
@@ -39,6 +40,10 @@ const App = () => {
         </Route>
         <Route path="/success">
           <Success />
+        </Route>
+
+        <Route path="/profile/:id">
+          <UserProfile />
         </Route>
         <Route path="/allproducts">
           <AllProducts />

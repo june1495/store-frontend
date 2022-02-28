@@ -1,10 +1,10 @@
 import React from 'react';
 import Products from '../components/Products';
 
-const HomePage = () => (
+const AllProducts = () => (
   <div>
     <Products />
   </div>
 );
 
-export default HomePage;
+export default AllProducts;

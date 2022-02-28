@@ -11,7 +11,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import StripeCheckout from 'react-stripe-checkout';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { userRequest } from '../requestMethods';
 import { cleanCart } from '../redux/cartSlice';
 
@@ -48,7 +48,9 @@ const Cart = () => {
       <Wrapper>
         <Title>Cartera</Title>
         <Top>
-          <TopButton>Continuar Comprando</TopButton>
+          <Link to="/allproducts">
+            <TopButton>Continuar Comprando</TopButton>
+          </Link>
           <TopTexts>
             <Toptext>Shopping Cart({cart.quantity})</Toptext>
           </TopTexts>

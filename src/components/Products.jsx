@@ -13,19 +13,16 @@ import Product from './Product';
 import config from '../config';
 
 const { URL_BASE } = config;
-console.log(URL_BASE);
 const Products = ({ cat, filters, sort }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
-
   useEffect(() => {
     const getProducts = async () => {
       try {
         const res = await axios.get(
-          cat
-            ? `${URL_BASE}/products?category=${cat}`
-            : `${URL_BASE}/products'`,
+          cat ? `${URL_BASE}/products?category=${cat}` : `${URL_BASE}/products`,
         );
+
         setProducts(res.data);
         // eslint-disable-next-line no-empty
       } catch (error) {}

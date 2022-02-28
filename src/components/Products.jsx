@@ -10,10 +10,10 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Product from './Product';
-// import config from '../config';
+import config from '../config';
 
-// const { URL_BASE } = config;
-
+const { URL_BASE } = config;
+console.log(URL_BASE);
 const Products = ({ cat, filters, sort }) => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -23,8 +23,8 @@ const Products = ({ cat, filters, sort }) => {
       try {
         const res = await axios.get(
           cat
-            ? `http://localhost:5000/api/products?category=${cat}`
-            : 'http://localhost:5000/api/products',
+            ? `${URL_BASE}/products?category=${cat}`
+            : `${URL_BASE}/products'`,
         );
         setProducts(res.data);
         // eslint-disable-next-line no-empty

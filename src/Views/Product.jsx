@@ -27,6 +27,7 @@ const Product = () => {
     const getProduct = async () => {
       try {
         const res = await axios.get(`${URL_BASE}/products/find/${id}`);
+        console.log(`${URL_BASE}/products/find/${id}`);
         setProduct(res.data);
       } catch (error) {}
     };

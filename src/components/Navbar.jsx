@@ -18,6 +18,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const quantity = useSelector((state) => state.cart.quantity);
   const user = useSelector((state) => state.user.currentUser);
+  const { img } = useSelector((state) => state.user);
   const [visible, setVisible] = useState(false);
 
   const toggleVisible = () => {
@@ -53,12 +54,26 @@ const Navbar = () => {
           </Link>
           {user ? (
             <UserProfile>
-              <div className="profile" onClick={toggleVisible}>
-                <AccountCircleIcon fontSize="large" />
-              </div>
+              {img ? (
+                <ImageContent onClick={toggleVisible}>
+                  <Image src={img} />
+                </ImageContent>
+              ) : (
+                <div className="profile" onClick={toggleVisible}>
+                  <AccountCircleIcon fontSize="large" />
+                </div>
+              )}
               <MenuProfile toggle={visible}>
                 <h3>{user && user.name}</h3>
                 <ul>
+                  <li>
+                    <Link
+                      to={`/profile/${user.id}`}
+                      style={{ textDecoration: 'none', color: '#444' }}
+                    >
+                      <span data-cy="log-out-button">Perfil</span>
+                    </Link>
+                  </li>
                   <li onClick={handleLogOut}>
                     <Link
                       to="/"
@@ -252,4 +267,18 @@ const MenuProfile = styled.div`
       }
     }
   }
+`;
+
+const ImageContent = styled.div`
+  width: 35px;
+  height: 35px;
+  background: #fff;
+  border-radius: 50%;
+`;
+
+const Image = styled.img`
+  height: 35px;
+  width: 35px;
+  object-fit: contain;
+  border-radius: 50%;
 `;

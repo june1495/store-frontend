@@ -4,7 +4,7 @@ import { Formik, Field, Form } from 'formik';
 
 // import { Form, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 // import React, { useEffect } from 'react';
 // import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
@@ -12,9 +12,11 @@ import LoaderComponent from '../../../common/LoaderComponent';
 // import { setLogin } from '../../../redux/auth/navBarLoginSlice';
 import MessageComponent from '../../../common/MessageComponent';
 import useSignup from '../hooks/useSignup';
+import { register } from '../../../redux/apiCalls';
 
 const SignupFormComponent = () => {
   const { validationSchema } = useSignup();
+  const dispatch = useDispatch();
 
   const userExists = { msg: 'The user already exists' };
 
@@ -29,10 +31,11 @@ const SignupFormComponent = () => {
         }}
         validationSchema={validationSchema}
         onSubmit={(values, { resetForm }) => {
+          register(dispatch, values);
           resetForm({ values: '' });
           swal({
-            title: '¡Estás a un solo paso de terminar tu registro!',
-            text: 'Revisa tu correo electrónico para validar tu cuenta',
+            title: '¡Registro Exitoso!',
+
             icon: 'success',
             value: true,
             visible: true,

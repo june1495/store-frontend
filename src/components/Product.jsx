@@ -1,6 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { FavoriteBorderOutlined, SearchOutlined } from '@mui/icons-material';
-import ShoppingCartOutlined from '@mui/icons-material/ShoppingCartOutlined';
+import { SearchOutlined } from '@mui/icons-material';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -10,17 +9,11 @@ const Product = ({ item }) => (
     <Circle />
     <Image src={item.img} />
     <Info>
-      <Icon>
-        <ShoppingCartOutlined />
-      </Icon>
       <Link to={`/product/${item._id}`}>
         <Icon>
           <SearchOutlined style={{ color: '#444' }} />
         </Icon>
       </Link>
-      <Icon>
-        <FavoriteBorderOutlined />
-      </Icon>
     </Info>
   </Container>
 );

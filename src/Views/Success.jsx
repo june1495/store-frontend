@@ -16,17 +16,22 @@ const Success = () => {
   const data = location.state.stripeData;
 
   const cart = location.state.products;
-
   const currentUser = useSelector((state) => state.user.currentUser);
   const [orderId, setOrderId] = useState(null);
   useEffect(() => {
     const createOrder = async () => {
       try {
         await userRequest.post('/orders', {
-          userId: currentUser.id,
+          id: currentUser.id,
           products: cart.products.map((item) => ({
             productId: item._id,
             quantity: item.quantity,
+            img: item.img,
+            price: item.price,
+            desc: item.desc,
+            title: item.title,
+            size: item.size,
+            color: item.color,
           })),
           amount: data.amount,
           address: data.billing_details.address,
@@ -48,10 +53,9 @@ const Success = () => {
         justifyContent: 'center',
       }}
     >
-      {orderId &&
-        `Order has been created successfully. Your order number is ${orderId}`}
+      {orderId && 'Se ha creado tu orden exitosamente'}
       <Link to="/">
-        <Button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</Button>
+        <Button style={{ padding: 10, marginTop: 20 }}>Ir a inicio</Button>
       </Link>
     </div>
   );

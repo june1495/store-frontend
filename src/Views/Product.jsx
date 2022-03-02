@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import config from '../config';
-import { addProduct, addOrder } from '../redux/cartSlice';
+import { addProduct } from '../redux/cartSlice';
 
 const { URL_BASE } = config;
 
@@ -45,14 +45,6 @@ const Product = () => {
   const handleClick = () => {
     dispatch(
       addProduct({
-        ...product,
-        quantity,
-        color,
-        size,
-      }),
-    );
-    dispatch(
-      addOrder({
         ...product,
         quantity,
         color,

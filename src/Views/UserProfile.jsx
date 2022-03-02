@@ -1,3 +1,5 @@
+/* eslint-disable react/jsx-one-expression-per-line */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/react-in-jsx-scope */
@@ -6,19 +8,22 @@
 /* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-empty */
-// import React, { useState, useEffect } from 'react';
-// import { useLocation } from 'react-router-dom';
+
 import styled from 'styled-components';
 import { FormGroup, Input } from 'reactstrap';
+import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginImage } from '../redux/userSlice';
+import { userRequest } from '../requestMethods';
 
-// import { userRequest } from '../requestMethods';
 const UserProfile = () => {
+  const [order, setOrder] = useState();
   const dispatch = useDispatch();
+  const location = useLocation();
+  const id = location.pathname.split('/')[2];
+
   const { currentUser, img, isFetching } = useSelector((state) => state.user);
-  const { order } = useSelector((state) => state.cart);
 
   const uploadImage = async (e) => {
     const { files } = e.target;
@@ -37,6 +42,16 @@ const UserProfile = () => {
 
     dispatch(loginImage(file.secure_url));
   };
+  useEffect(() => {
+    const getOrder = async () => {
+      const resp = await userRequest.get(`/orders/find/${id}`);
+
+      const first = resp.data;
+      const mapped = first.map((e) => e.products);
+      setOrder(mapped);
+    };
+    getOrder();
+  }, [id]);
 
   return (
     <Container>
@@ -60,18 +75,28 @@ const UserProfile = () => {
       </ProfileUser>
       <OrderProfile>
         <h1>Orders</h1>
-        {order.map((product) => (
-          <Content key={product._id}>
-            <OrderImage src={product.img} />
-            <OrderInfo>
-              <OrderName>{product.title}</OrderName>
-              <OrderDes>{product._id}</OrderDes>
-              <OrderQty>{product.quantity}</OrderQty>
-            </OrderInfo>
-          </Content>
-        ))}
-
-        <Hr />
+        {order?.map((e) =>
+          e.map((c) => (
+            <ContainerO key={c._id}>
+              <Content>
+                <OrderImage src={c.img} />
+                <OrderInfo>
+                  <OrderName>
+                    <span>ProductId:</span> {c.productId}
+                  </OrderName>
+                  <OrderDes>
+                    <span>Producto : </span>
+                    {c.title}
+                  </OrderDes>
+                  <OrderQty>
+                    <span>Cantidad:</span> {c.quantity}
+                  </OrderQty>
+                </OrderInfo>
+              </Content>
+              <Hr />
+            </ContainerO>
+          )),
+        )}
       </OrderProfile>
     </Container>
   );
@@ -103,6 +128,10 @@ const OrderProfile = styled.div`
   width: 100%;
   background-color: #fbf8f1;
   border-left: 3px white solid;
+  h1 {
+    text-align: center;
+    border-bottom: 1px solid #fff;
+  }
 `;
 
 const ProfileImage = styled.div`
@@ -129,6 +158,9 @@ const ProfileEmail = styled.span``;
 const Content = styled.div`
   display: flex;
   justify-content: space-around;
+  background-color: #fbf8f1;
+  height: 50%;
+  width: 100%;
 `;
 
 const OrderImage = styled.img`
@@ -143,18 +175,32 @@ const OrderInfo = styled.div`
   flex: 2;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-evenly;
   align-items: flex-start;
+  padding-bottom: 80px;
 `;
 
-const OrderName = styled.span``;
+const OrderName = styled.div`
+  span {
+    font-weight: 600;
+  }
+`;
 
-const OrderDes = styled.span``;
+const OrderDes = styled.div`
+  span {
+    font-weight: 600;
+  }
+`;
 
-const OrderQty = styled.span``;
+const OrderQty = styled.div`
+  span {
+    font-weight: 600;
+  }
+`;
 
 const Hr = styled.hr`
   background-color: #fff;
   border: none;
   height: 2px;
 `;
+const ContainerO = styled.div``;

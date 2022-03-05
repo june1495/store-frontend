@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Navbar from '../components/Navbar';
 import { userRequest } from '../requestMethods';
 
 const Success = () => {
@@ -44,20 +45,23 @@ const Success = () => {
     setOrderId(data.id);
   }, [data]);
   return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}
-    >
-      {orderId && 'Se ha creado tu orden exitosamente'}
-      <Link to="/">
-        <Button style={{ padding: 10, marginTop: 20 }}>Ir a inicio</Button>
-      </Link>
-    </div>
+    <>
+      <Navbar />
+      <div
+        style={{
+          height: '100vh',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        {orderId && 'Se ha creado tu orden exitosamente'}
+        <Link to="/">
+          <Button style={{ padding: 10, marginTop: 20 }}>Ir a inicio</Button>
+        </Link>
+      </div>
+    </>
   );
 };
 

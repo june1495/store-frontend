@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
+import Navbar from '../components/Navbar';
 import Products from '../components/Products';
 
 const ProductList = () => {
@@ -20,6 +21,7 @@ const ProductList = () => {
   };
   return (
     <Container>
+      <Navbar />
       <Title>{cat.toUpperCase()}</Title>
       <FilterContainer>
         {cat === 'polos' && (

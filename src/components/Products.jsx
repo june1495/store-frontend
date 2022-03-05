@@ -1,3 +1,4 @@
+/* eslint-disable no-empty */
 /* eslint-disable indent */
 /* eslint-disable react/jsx-indent */
 /* eslint-disable react/no-array-index-key */

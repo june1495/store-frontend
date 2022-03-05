@@ -2,10 +2,12 @@
 import React from 'react';
 
 import styled from 'styled-components';
+import Navbar from '../../components/Navbar';
 import SignupFormComponent from './components/SignupComponent';
 
 const RegisterPage = () => (
   <Container data-testid="register-page">
+    <Navbar />
     <Content>
       <Image>
         <img

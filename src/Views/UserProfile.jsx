@@ -14,15 +14,19 @@ import { FormGroup, Input } from 'reactstrap';
 import { useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
 import { loginImage } from '../redux/userSlice';
 import { userRequest } from '../requestMethods';
+import Navbar from '../components/Navbar';
+import config from '../config';
 
+const { URL_BASE } = config;
 const UserProfile = () => {
-  const [order, setOrder] = useState();
   const dispatch = useDispatch();
   const location = useLocation();
   const id = location.pathname.split('/')[2];
 
+  const [order, setOrder] = useState();
   const { currentUser, img, isFetching } = useSelector((state) => state.user);
 
   const uploadImage = async (e) => {
@@ -44,73 +48,78 @@ const UserProfile = () => {
   };
   useEffect(() => {
     const getOrder = async () => {
-      const resp = await userRequest.get(`/orders/find/${id}`);
-
-      const first = resp.data;
-      const mapped = first.map((e) => e.products);
-      setOrder(mapped);
+      const resp = await axios.get(`${URL_BASE}/orders/find/${id}`, {
+        headers: {
+          token: `Bearer ${currentUser?.token}`,
+        },
+      });
+      setOrder(resp.data);
     };
+
     getOrder();
-  }, [id]);
+  }, []);
 
   return (
     <Container>
-      <ProfileUser>
-        <ProfileImage>
-          {isFetching ? (
-            <Image src={img} />
-          ) : (
-            <FormGroup>
-              <Input
-                type="file"
-                name="file"
-                onChange={uploadImage}
-                style={{ marginTop: '150px' }}
-              />
-            </FormGroup>
+      <Navbar />
+      <Wrapper>
+        <ProfileUser>
+          <ProfileImage>
+            {isFetching ? (
+              <Image src={img} />
+            ) : (
+              <FormGroup>
+                <Input
+                  type="file"
+                  name="file"
+                  onChange={uploadImage}
+                  style={{ marginTop: '150px' }}
+                />
+              </FormGroup>
+            )}
+          </ProfileImage>
+          <ProfileName>{currentUser.name}</ProfileName>
+          <ProfileEmail>{currentUser.email}</ProfileEmail>
+        </ProfileUser>
+        <OrderProfile>
+          <h1>Orders</h1>
+          {order?.map((e) =>
+            e.products.map((c) => (
+              <ContainerO key={c._id}>
+                <Content>
+                  <OrderImage src={c.img} />
+                  <OrderInfo>
+                    <OrderName>
+                      <span>ProductId:</span> {c.productId}
+                    </OrderName>
+                    <OrderDes>
+                      <span>Producto : </span>
+                      {c.title}
+                    </OrderDes>
+                    <OrderQty>
+                      <span>Cantidad:</span> {c.quantity}
+                    </OrderQty>
+                  </OrderInfo>
+                </Content>
+                <Hr />
+              </ContainerO>
+            )),
           )}
-        </ProfileImage>
-        <ProfileName>{currentUser.name}</ProfileName>
-        <ProfileEmail>{currentUser.email}</ProfileEmail>
-      </ProfileUser>
-      <OrderProfile>
-        <h1>Orders</h1>
-        {order?.map((e) =>
-          e.map((c) => (
-            <ContainerO key={c._id}>
-              <Content>
-                <OrderImage src={c.img} />
-                <OrderInfo>
-                  <OrderName>
-                    <span>ProductId:</span> {c.productId}
-                  </OrderName>
-                  <OrderDes>
-                    <span>Producto : </span>
-                    {c.title}
-                  </OrderDes>
-                  <OrderQty>
-                    <span>Cantidad:</span> {c.quantity}
-                  </OrderQty>
-                </OrderInfo>
-              </Content>
-              <Hr />
-            </ContainerO>
-          )),
-        )}
-      </OrderProfile>
+        </OrderProfile>
+      </Wrapper>
     </Container>
   );
 };
 export default UserProfile;
 
-const Container = styled.div`
+const Container = styled.div``;
+const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   height: calc(100vh - 60px);
 `;
-
 const ProfileUser = styled.div`
   flex: 1;
   background: #fbf8f1;

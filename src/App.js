@@ -9,7 +9,6 @@ import {
 import { useSelector } from 'react-redux';
 import HomePage from './Views/HomePage';
 import './App.css';
-import Navbar from './components/Navbar';
 
 import Cart from './Views/Cart';
 import Product from './Views/Product';
@@ -24,7 +23,6 @@ const App = () => {
   const user = useSelector((state) => state.user.currentUser);
   return (
     <Router>
-      <Navbar />
       <Switch>
         <Route exact path="/">
           <HomePage />

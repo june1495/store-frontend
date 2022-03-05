@@ -10,6 +10,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import config from '../config';
 import { addProduct } from '../redux/cartSlice';
+import Navbar from '../components/Navbar';
 
 const { URL_BASE } = config;
 
@@ -55,6 +56,7 @@ const Product = () => {
 
   return (
     <Container>
+      <Navbar />
       <Wrapper>
         <ImgContainer>
           <Image src={product.img} />

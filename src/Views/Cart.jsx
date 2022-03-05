@@ -14,6 +14,7 @@ import StripeCheckout from 'react-stripe-checkout';
 import { Link, useHistory } from 'react-router-dom';
 import { userRequest } from '../requestMethods';
 import { cleanCart } from '../redux/cartSlice';
+import Navbar from '../components/Navbar';
 
 const KEY = process.env.REACT_APP_STR;
 
@@ -45,6 +46,7 @@ const Cart = () => {
   }, [stripeToken, cart.total, history]);
   return (
     <Container>
+      <Navbar />
       <Wrapper>
         <Title>Cartera</Title>
         <Top>

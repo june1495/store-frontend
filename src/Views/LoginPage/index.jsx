@@ -2,9 +2,11 @@
 import styled from 'styled-components';
 import React from 'react';
 import SignInForm from './components/SignInForm';
+import Navbar from '../../components/Navbar';
 
 const LoginPage = () => (
   <Container data-testid="login-page">
+    <Navbar />
     <Content>
       <Image>
         <img

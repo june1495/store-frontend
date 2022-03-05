@@ -2,21 +2,14 @@
 /* eslint-disable no-unused-expressions */
 /* eslint-disable react/react-in-jsx-scope */
 import { Formik, Field, Form } from 'formik';
-// import { Form, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useDispatch } from 'react-redux';
 import { login } from '../../../redux/apiCalls';
-
 import useSignin from '../hook/useSignin';
 
 const SignInForm = () => {
   const { validationSchema } = useSignin();
   const dispatch = useDispatch();
-
-  // const [username, setUsername] = useState('');
-  // const [password, setPassword] = useState('');
-  const { user, isFetching, error } = useSelector((state) => state.user);
 
   return (
     <Formik

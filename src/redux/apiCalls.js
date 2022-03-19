@@ -1,4 +1,6 @@
 /* eslint-disable import/prefer-default-export */
+// import axios from 'axios';
+// import { useSelector } from 'react-redux';
 import {
   loginFailure,
   loginStart,
@@ -28,3 +30,20 @@ export const register = async (dispatch, user) => {
     dispatch(registerFailure());
   }
 };
+
+// export const updateUser = async (dispatch, user) => {
+//   const { currentUser } = useSelector((state) => state.user);
+//   const { id } = currentUser;
+//   dispatch(loginStart());
+//   try {
+//     const res = await axios.put(`${URL_BASE}/users/find/${id}`, user, {
+//       headers: {
+//         token: `Bearer ${currentUser?.token}`,
+//       },
+//       data: user,
+//     });
+//     dispatch(loginSuccess(res.data));
+//   } catch (err) {
+//     dispatch(loginFailure());
+//   }
+// };
